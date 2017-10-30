@@ -1,5 +1,7 @@
 package com.study.hooksoftkeyboard.listener;
 
+import android.util.Log;
+
 import com.study.hooksoftkeyboard.SFKeyboardManager;
 
 /**
@@ -10,7 +12,11 @@ public class SoftMessageDispatcher {
 
     private static SoftMessageDispatcher mInstance = new SoftMessageDispatcher();
 
-    private boolean softShow = false;
+    public static final int UNKNOWN = -1;//键盘状态未初始化
+    public static final int HIDE = 0;//键盘隐藏
+    public static final int SHOW = 1;//键盘显示
+
+    public int currentState = UNKNOWN;
 
     private SoftMessageDispatcher() {
     }
@@ -19,10 +25,15 @@ public class SoftMessageDispatcher {
         return mInstance;
     }
 
+    public void initOriginState(int status) {
+        currentState = status;
+    }
+
     //用户不需要调用此方法
     public void dispatchShowMessage() {
-        if (!softShow) {
-            softShow = true;
+        if (currentState != -1 && currentState == HIDE) {
+            currentState = SHOW;
+            Log.d("xiaoyu", "键盘真的显示啦!!!");
             for (SoftKeyboardListener listener : SFKeyboardManager.getInstance().getListeners()) {
                 listener.onKeyboardShow();
             }
@@ -31,8 +42,9 @@ public class SoftMessageDispatcher {
 
     //用户不需要调用此方法
     public void dispatchHideMessage() {
-        if (softShow) {
-            softShow = false;
+        if (currentState != -1 && currentState == SHOW) {
+            currentState = HIDE;
+            Log.d("xiaoyu", "键盘真的隐藏啦!!!");
             for (SoftKeyboardListener listener : SFKeyboardManager.getInstance().getListeners()) {
                 listener.onKeyboardHide();
             }

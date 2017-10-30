@@ -25,7 +25,7 @@ public abstract class ProxyHook extends Hook implements InvocationHandler {
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//        android.util.Log.d("xiaoyu","proxyhook----:"+getClass().getName()+"method---"+method.getName());
+        android.util.Log.d("xiaoying","proxyhook----:"+getClass().getName()+"   method---"+method.getName());
         try {
             if (!isEnable()) {
                 return method.invoke(mOldObj, args);

@@ -2,9 +2,11 @@ package com.study.hooksoftkeyboard.hook.handle;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.study.hooksoftkeyboard.helper.MyProxy;
 import com.study.hooksoftkeyboard.helper.compat.IInputConnectionWrapperCompat;
@@ -55,6 +57,7 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
 
         @Override
         protected boolean beforeInvoke(Object receiver, Method method, Object[] args) throws Throwable {
+            Log.d("xiaoyu", "showSoftInput");
             SoftMessageDispatcher.getInstance().dispatchShowMessage();
             return super.beforeInvoke(receiver, method, args);
         }
@@ -67,6 +70,7 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
 
         @Override
         protected boolean beforeInvoke(Object receiver, Method method, Object[] args) throws Throwable {
+            Log.d("xiaoyu", "showSoftInputFromInputMethod");
             SoftMessageDispatcher.getInstance().dispatchShowMessage();
             return super.beforeInvoke(receiver, method, args);
         }
@@ -142,12 +146,13 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
         if (args[argIndex] == null) {
             return;
         }
+        Log.d("xiaoyu", "hookInputConnection mInputConnection替换掉");
         Field mInputConnectionField = null;
         try {
             //反射当前正在交互的EditText
             Object sInstance = FieldUtils.readStaticField(InputMethodManager.class, "sInstance");
             View mServedView = (View) FieldUtils.readField(sInstance, "mServedView", true);
-
+            Log.d("xiaoyu", "mInputConnection替换掉 mServedView--:" + ((EditText) mServedView).getText().toString());
             mInputConnectionField = FieldUtils.getDeclaredField(IInputConnectionWrapperCompat.Class(), "mInputConnection", true);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 //7.0以下

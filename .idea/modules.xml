@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HookSoftKeyboard.iml" filepath="$PROJECT_DIR$/HookSoftKeyboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SoftKeyboardHooker.iml" filepath="$PROJECT_DIR$/SoftKeyboardHooker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

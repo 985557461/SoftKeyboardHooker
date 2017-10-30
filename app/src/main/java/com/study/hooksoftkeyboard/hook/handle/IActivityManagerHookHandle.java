@@ -77,9 +77,12 @@ public class IActivityManagerHookHandle extends BaseHookHandle {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        SoftMessageDispatcher.getInstance().initOriginState(SoftMessageDispatcher.SHOW);
                                         SoftMessageDispatcher.getInstance().dispatchShowMessage();
                                     }
-                                },500);
+                                }, 500);
+                            } else {
+                                SoftMessageDispatcher.getInstance().initOriginState(SoftMessageDispatcher.HIDE);
                             }
                         }
                     }
